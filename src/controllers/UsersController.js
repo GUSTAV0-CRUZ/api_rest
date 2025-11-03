@@ -2,44 +2,22 @@ import UserModel from '../models/UserModel';
 
 class User {
   async create(req, res) {
+    console.log(req.body);
+    console.log('user create');
     try {
       const userCriado = await UserModel.create(req.body);
       const { id, nome, email } = userCriado;
       res.json({ id, nome, email });
     } catch (e) {
+      console.log(e);
       res.status(400).json({
         errors: [e.errors.map((erro) => (erro.message))],
       });
     }
   }
 
-  // async index(req, res) {
-  //   try {
-  //     const lista = await UserModel.findAll();
-  //     res.json(lista);
-  //   } catch (e) {
-  //     res.status(400).json({
-  //       errors: [e.errors.map((erro) => (erro.message))],
-  //     });
-  //   }
-  // }
-
-  // async show(req, res) {
-  //   try {
-  //     const user = await UserModel.findByPk(req.params.id);
-  //     if (!user) {
-  //       res.status(400).json({ errors: ['Usuario não encontrado'] });
-  //       return;
-  //     }
-  //     res.json(user);
-  //   } catch (e) {
-  //     res.status(400).json({
-  //       errors: [e.errors.map((erro) => (erro.message))],
-  //     });
-  //   }
-  // }
-
   async update(req, res) {
+    console.log('user update');
     try {
       const user = await UserModel.findByPk(req.userId);
       if (!user) {
@@ -61,6 +39,7 @@ class User {
   }
 
   async delete(req, res) {
+    console.log('user delete');
     try {
       const user = await UserModel.findByPk(req.userId);
       if (!user) {

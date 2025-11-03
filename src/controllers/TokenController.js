@@ -9,6 +9,7 @@ async function passwordIsValid(password, passwordHash) {
 
 class Token {
   async create(req, res) {
+    console.log('token create');
     const { email = '', password = '' } = req.body;
 
     if (!email || !password) {

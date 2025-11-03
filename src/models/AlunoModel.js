@@ -27,6 +27,7 @@ export default class Alunos extends Model {
       },
       email: {
         type: Sequelize.STRING,
+        defaultValue: '',
         unique: {
           args: [true],
           msg: 'Email existente',
@@ -44,11 +45,11 @@ export default class Alunos extends Model {
         validate: {
           min: {
             args: [3],
-            msg: 'Precisa estar entre 3 e 130',
+            msg: 'Idade precisa estar entre 3 e 130',
           },
           max: {
             args: [130],
-            msg: 'Precisa estar entre 3 e 130',
+            msg: 'Idade precisa estar entre 3 e 130',
           },
           isInt: {
             msg: 'Precisa ser um número inteiro',

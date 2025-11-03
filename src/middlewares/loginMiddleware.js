@@ -2,6 +2,7 @@ import jsonwebtoken from 'jsonwebtoken';
 import UserModel from '../models/UserModel';
 
 export default async (req, res, next) => {
+  console.log('middleware');
   const { authorization } = req.headers;
 
   if (!authorization) return res.status(401).json({ errors: ['Login required'] });
