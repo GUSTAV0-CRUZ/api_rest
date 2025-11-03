@@ -18,6 +18,7 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
       idade: {
         type: Sequelize.INTEGER,
@@ -35,7 +36,7 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      upadated_at: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
