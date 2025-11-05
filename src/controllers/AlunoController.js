@@ -1,8 +1,8 @@
 import AlunoModel from '../models/AlunoModel';
 
-class HomeControllers {
+class AlunoControllers {
   async index(req, res) {
-    console.log('Home index');
+    console.log('aluno index');
     try {
       const alunos = await AlunoModel.findAll();
       const alunosMap = alunos.map((aluno) => {
@@ -22,7 +22,7 @@ class HomeControllers {
   }
 
   async create(req, res) {
-    console.log('Home create');
+    console.log('aluno create');
     try {
       const userNew = await AlunoModel.create(req.body);
       const {
@@ -39,7 +39,7 @@ class HomeControllers {
   }
 
   async show(req, res) {
-    console.log('Home show');
+    console.log('aluno show');
     try {
       const user = await AlunoModel.findByPk(req.params.id);
       if (!user) return res.json({ errors: ['Usuário não encontrado'] });
@@ -57,7 +57,7 @@ class HomeControllers {
   }
 
   async update(req, res) {
-    console.log('Home update');
+    console.log('aluno update');
     try {
       const user = await AlunoModel.findByPk(req.params.id);
       if (!user) return res.json({ errors: ['Usuário não encontrado'] });
@@ -76,16 +76,13 @@ class HomeControllers {
   }
 
   async delete(req, res) {
-    console.log('Home delete');
+    console.log('aluno delete');
     try {
       const user = await AlunoModel.findByPk(req.params.id);
       if (!user) return res.json({ errors: ['Usuário não encontrado'] });
       user.destroy();
-      const {
-        id, nome, sobrenome, email, idade, altura, peso,
-      } = user;
       return res.json({
-        id, nome, sobrenome, email, idade, altura, peso,
+        deletado: true,
       });
     } catch (e) {
       if (!e.errors) return res.json({ errors: ['Error não identificado'] });
@@ -95,4 +92,4 @@ class HomeControllers {
   }
 }
 
-export default new HomeControllers();
+export default new AlunoControllers();
