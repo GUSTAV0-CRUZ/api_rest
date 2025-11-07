@@ -9,7 +9,7 @@ export default async (req, res, next) => {
 
   const [, token] = authorization.split(' ');
   try {
-    const dadosUser = jsonwebtoken.verify(token, process.env.TOKEN_SECRET);
+    const dadosUser = await jsonwebtoken.verify(token, process.env.TOKEN_SECRET);
     const { id, email } = dadosUser;
     const checkDados = await UserModel.findOne({ where: { email } });
     if (!checkDados) {
