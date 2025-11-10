@@ -15,7 +15,7 @@ class Picture {
         const picture = await PictureModel.create({ filename, originalname, id_aluno });
         return await res.status(200).json(picture);
       } catch (e) {
-        return res.status(400).json({ errors: ['erro ao tentar criar imagem'] });
+        return res.status(400).json({ errors: ['erro ao tentar salvar imagem'] });
       }
     });
   }

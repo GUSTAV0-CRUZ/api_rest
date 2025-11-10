@@ -1,23 +1,23 @@
 import AlunoModel from '../models/AlunoModel';
+import Picture from '../models/PictureModel';
 
 class AlunoControllers {
   async index(req, res) {
     console.log('aluno index');
     try {
-      const alunos = await AlunoModel.findAll();
-      const alunosMap = alunos.map((aluno) => {
-        const {
-          id, nome, sobrenome, email, idade, altura, peso,
-        } = aluno.dataValues;
-        return {
-          id, nome, sobrenome, email, idade, altura, peso,
-        };
+      const alunos = await AlunoModel.findAll({
+        attributes: ['id', 'nome', 'sobrenome', 'email', 'idade', 'altura', 'peso'],
+        order: [['id', 'DESC'], [Picture, 'id', 'DESC']],
+        include: {
+          model: Picture,
+          attributes: ['id', 'originalname', 'filename'],
+        },
       });
-      return res.json(alunosMap);
+      return res.status(200).json(alunos);
     } catch (e) {
-      if (!e.errors) return res.json({ errors: ['Error não identificado'] });
+      if (!e.errors) return res.status(400).json({ errors: ['Error não identificado'] });
       const erros = e.errors.map((erro) => erro.message);
-      return res.json(erros);
+      return res.status(400).json(erros);
     }
   }
 
@@ -28,13 +28,13 @@ class AlunoControllers {
       const {
         id, nome, sobrenome, email, idade, altura, peso,
       } = userNew;
-      return res.json({
+      return res.status(200).json({
         id, nome, sobrenome, email, idade, altura, peso,
       });
     } catch (e) {
-      if (!e.errors) return res.json({ errors: ['Error não identificado'] });
+      if (!e.errors) return res.status(400).json({ errors: ['Error não identificado'] });
       const erros = e.errors.map((erro) => erro.message);
-      return res.json(erros);
+      return res.status(400).json(erros);
     }
   }
 
@@ -42,17 +42,17 @@ class AlunoControllers {
     console.log('aluno show');
     try {
       const user = await AlunoModel.findByPk(req.params.id);
-      if (!user) return res.json({ errors: ['Usuário não encontrado'] });
+      if (!user) return res.status(400).json({ errors: ['Usuário não encontrado'] });
       const {
         id, nome, sobrenome, email, idade, altura, peso,
       } = user;
-      return res.json({
+      return res.status(200).json({
         id, nome, sobrenome, email, idade, altura, peso,
       });
     } catch (e) {
-      if (!e.errors) return res.json({ errors: ['Error não identificado'] });
+      if (!e.errors) return res.status(400).json({ errors: ['Error não identificado'] });
       const erros = e.errors.map((erro) => erro.message);
-      return res.json(erros);
+      return res.status(400).json(erros);
     }
   }
 
@@ -60,18 +60,18 @@ class AlunoControllers {
     console.log('aluno update');
     try {
       const user = await AlunoModel.findByPk(req.params.id);
-      if (!user) return res.json({ errors: ['Usuário não encontrado'] });
+      if (!user) return res.status(400).json({ errors: ['Usuário não encontrado'] });
       const userUpdate = await user.update(req.body);
       const {
         id, nome, sobrenome, email, idade, altura, peso,
       } = userUpdate;
-      return res.json({
+      return res.status(200).json({
         id, nome, sobrenome, email, idade, altura, peso,
       });
     } catch (e) {
       if (!e.errors) return res.json({ errors: ['Error não identificado'] });
       const erros = e.errors.map((erro) => erro.message);
-      return res.json(erros);
+      return res.status(400).json(erros);
     }
   }
 
@@ -81,13 +81,13 @@ class AlunoControllers {
       const user = await AlunoModel.findByPk(req.params.id);
       if (!user) return res.json({ errors: ['Usuário não encontrado'] });
       user.destroy();
-      return res.json({
+      return res.status(200).json({
         deletado: true,
       });
     } catch (e) {
       if (!e.errors) return res.json({ errors: ['Error não identificado'] });
       const erros = e.errors.map((erro) => erro.message);
-      return res.json(erros);
+      return res.status(400).json(erros);
     }
   }
 }
