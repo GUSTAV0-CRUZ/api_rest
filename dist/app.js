@@ -26,6 +26,7 @@ class App {
   }
 
   routes() {
+    this.app.use('/');
     this.app.use('/aluno/', _alunosRoutes2.default);
     this.app.use('/user/', _usersRoutes2.default);
     this.app.use('/token/', _tokenRoutes2.default);
