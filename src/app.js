@@ -26,7 +26,7 @@ class App {
   }
 
   routes() {
-    this.app.use('/');
+    this.app.use('/', (req, res) => res.send('test'));
     this.app.use('/aluno/', alunosRoutes);
     this.app.use('/user/', usersRouter);
     this.app.use('/token/', tokenRouter);
