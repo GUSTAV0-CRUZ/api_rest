@@ -10,7 +10,7 @@ class AlunoControllers {
         order: [['id', 'DESC'], [_PictureModel2.default, 'id', 'DESC']],
         include: {
           model: _PictureModel2.default,
-          attributes: ['id', 'originalname', 'filename'],
+          attributes: ['id', 'originalname', 'filename', 'url'],
         },
       });
       return res.status(200).json(alunos);
