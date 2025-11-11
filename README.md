@@ -17,6 +17,7 @@ O foco foi construir uma API seguindo as melhores práticas de mercado, com cód
 ## 🚀 Infraestrutura e Deploy
 
 * **Hospedagem:** A aplicação está em produção em uma **VM (EC2) da AWS**.
+* **Gerenciador de Processos:** O **PM2** é utilizado na VM para garantir que a API permaneça online, reiniciando-a automaticamente em caso de falhas.
 * **Banco de Dados:** O banco de dados **MariaDB** está containerizado usando **Docker**.
 * **Testes de API:** As rotas foram testadas e validadas utilizando o **Insomnia**.
 * **Gerenciamento do BD:** O banco de dados foi gerenciado e visualizado através do **MySQL Workbench**.
@@ -26,17 +27,19 @@ O foco foi construir uma API seguindo as melhores práticas de mercado, com cód
 * **Autenticação de Usuários:**
     * Rota `POST /users` para registrar novos usuários com hash de senha (usando `bcrypt`).
     * Rota `POST /token` para login, que retorna um **JSON Web Token (JWT)** se as credenciais estiverem corretas.
-* **Rotas Protegidas:** A maioria das rotas (como o CRUD de alunos) é protegida e só pode ser acessada com um token JWT válido no header da requisição.
-* **CRUD de Alunos:** Rotas `GET`, `POST`, `PUT` e `DELETE` para o gerenciamento completo dos dados dos alunos (nome, e-mail, idade, etc.).
-* **Upload de Fotos:** Rota `POST /picture` que utiliza `multer` para permitir o upload de fotos, que são associadas aos alunos.
+* **Rotas Protegidas:** A maioria das rotas é protegida e só pode ser acessada com um token JWT válido no header da requisição.
+* **CRUD de Alunos com Relacionamento de Dados:**
+    * Rotas `GET`, `POST`, `PUT` e `DELETE` seguindo os padrões RESTful para o gerenciamento completo dos alunos.
+    * A API gerencia o relacionamento 1-N (um-para-muitos) entre Alunos e Fotos.
+* **Upload de Fotos:** Rota `POST /picture` que utiliza `multer` para permitir o upload de múltiplas fotos, que são associadas a um aluno específico.
 
 ## 🛠️ Arquitetura e Tecnologias Utilizadas
 
 A API foi construída em **Node.js** e utiliza uma arquitetura organizada com separação de responsabilidades:
 
-* **Servidor:** **Express.js** para o gerenciamento das rotas e middlewares.
+* **Servidor:** **Express.js** para o gerenciamento de rotas RESTful e middlewares.
 * **Banco de Dados:** **MariaDB** para persistência dos dados.
-* **ORM :** **Sequelize** para modelar os dados (Alunos, Usuários, Fotos) e interagir com o banco de dados SQL de forma segura.
+* **ORM :** **Sequelize** para modelar os dados (Alunos, Usuários, Fotos) e gerenciar os **relacionamentos** entre as tabelas SQL de forma segura.
 * **Autenticação:** **JSON Web Token (JWT)** para criar tokens de sessão seguros e **bcrypt** para criptografar as senhas dos usuários.
 * **Upload de Arquivos:** **Multer** para gerenciar o upload de imagens .
 * **Transpilação:** **Sucrase** e **Nodemon** para permitir o uso de sintaxe de `import/export` (ES6 Modules) no Node.js em ambiente de desenvolvimento.
