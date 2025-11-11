@@ -2,6 +2,5 @@
 
 const port = 3000;
 _app2.default.listen(port, () => {
-  console.log(`sevidor rodando na porta ${port}`);
   console.log(`ctrl + click para acessa http://localhost:${port}`);
 });
